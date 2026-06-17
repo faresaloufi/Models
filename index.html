@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fares Aloufi — Models</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E11;
+    --bg-raised: #11151A;
+    --text: #E8E6E1;
+    --text-dim: #5A6470;
+    --line: #232A31;
+    --signal: #00C896;
+    --signal-dim: #00C89622;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* ---- Header / ticker line ---- */
+  .ticker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+  }
+
+  .ticker .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 8px var(--signal);
+    flex-shrink: 0;
+  }
+
+  .ticker .sep { color: var(--line); }
+
+  /* ---- Hero ---- */
+  .hero { margin-bottom: 64px; }
+
+  .hero .name {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: clamp(40px, 7vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .hero .role {
+    margin-top: 14px;
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 540px;
+  }
+
+  .hero .role .accent { color: var(--signal); }
+
+  .hero .meta-row {
+    display: flex;
+    gap: 28px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+
+  .meta-item span.val {
+    display: block;
+    font-family: 'Source Serif 4', serif;
+    font-size: 17px;
+    color: var(--text);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+
+  /* ---- Section label ---- */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ---- Project grid ---- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px 20px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .card:hover {
+    border-color: var(--signal);
+    transform: translateY(-2px);
+  }
+
+  .card:hover::before { transform: scaleX(1); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card-tag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--signal);
+    background: var(--signal-dim);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .card-status {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .card-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .metric-strip {
+    display: flex;
+    gap: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .metric {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .metric span.mval {
+    display: block;
+    font-size: 14px;
+    color: var(--text);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .metric.up span.mval { color: var(--signal); }
+
+  /* ---- Footer ---- */
+  .footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer a { color: var(--text-dim); text-decoration: none; }
+  .footer a:hover { color: var(--signal); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .card::before { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="ticker">
+      <div class="dot"></div>
+      <span>FARES ALOUFI</span>
+      <span class="sep">/</span>
+      <span>MODELS</span>
+      <span class="sep">/</span>
+      <span id="clock">RIYADH</span>
+    </div>
+
+    <div class="hero">
+      <div class="name">Fares Aloufi</div>
+      <div class="role">
+        Finance student at <span class="accent">Prince Sultan University</span> · building financial models, valuations, and equity research.
+      </div>
+    </div>
+
+    <div class="section-label">Models &amp; Projects</div>
+
+    <div class="grid">
+
+      <a class="card" href="#" data-empty="true">
+        <div class="card-top">
+          <span class="card-tag">DCF</span>
+          <span class="card-status">Draft</span>
+        </div>
+        <div class="card-title">Project One</div>
+        <div class="card-desc">Add a short description once this model is built — company, sector, and what the valuation found.</div>
+        <div class="metric-strip">
+          <div class="metric">WACC<span class="mval">—</span></div>
+          <div class="metric">Upside<span class="mval">—</span></div>
+          <div class="metric up">Rating<span class="mval">—</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="#" data-empty="true">
+        <div class="card-top">
+          <span class="card-tag">COMPS</span>
+          <span class="card-status">Draft</span>
+        </div>
+        <div class="card-title">Project Two</div>
+        <div class="card-desc">Add a short description once this model is built — company, sector, and what the valuation found.</div>
+        <div class="metric-strip">
+          <div class="metric">EV/EBITDA<span class="mval">—</span></div>
+          <div class="metric">P/E<span class="mval">—</span></div>
+          <div class="metric up">Rating<span class="mval">—</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="#" data-empty="true">
+        <div class="card-top">
+          <span class="card-tag">LBO</span>
+          <span class="card-status">Draft</span>
+        </div>
+        <div class="card-title">Project Three</div>
+        <div class="card-desc">Add a short description once this model is built — company, sector, and what the valuation found.</div>
+        <div class="metric-strip">
+          <div class="metric">IRR<span class="mval">—</span></div>
+          <div class="metric">MOIC<span class="mval">—</span></div>
+          <div class="metric up">Rating<span class="mval">—</span></div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="footer">
+      <span>Updated June 2026</span>
+      <a href="mailto:youremail@example.com">youremail@example.com</a>
+    </div>
+
+  </div>
+
+  <script>
+    // Clicking an empty card prompts instead of dead-linking
+    document.querySelectorAll('.card[data-empty="true"]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>
